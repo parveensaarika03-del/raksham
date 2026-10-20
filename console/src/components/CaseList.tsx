@@ -38,7 +38,7 @@ export function CaseList({ user, selectedId, onSelect }: CaseListProps) {
     return <p className="p-4 text-sm text-slate-500">No cases for this user.</p>;
 
   return (
-    <ul className="divide-y divide-slate-200 overflow-auto rounded-lg border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-700 dark:bg-slate-900">
+    <ul className="divide-y divide-slate-800/60 overflow-y-auto max-h-[calc(100vh-14rem)] bg-transparent">
       {cases.map((c) => (
         <li key={c.id}>
           <button
@@ -46,20 +46,22 @@ export function CaseList({ user, selectedId, onSelect }: CaseListProps) {
             data-testid="case-row"
             onClick={() => onSelect(c.id)}
             aria-current={selectedId === c.id ? "true" : undefined}
-            className={`flex w-full flex-col gap-1 px-3 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-800 ${
-              selectedId === c.id ? "bg-sky-50 dark:bg-slate-800" : ""
+            className={`group flex w-full flex-col gap-1.5 p-3.5 text-left transition-all duration-150 hover:bg-slate-800/40 cursor-pointer ${
+              selectedId === c.id
+                ? "bg-indigo-600/15 border-l-4 border-indigo-500 shadow-inner"
+                : "border-l-4 border-transparent"
             }`}
           >
             <span className="flex items-center justify-between gap-2">
               <BandBadge band={c.band} />
-              <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-sm font-bold tracking-tight text-white group-hover:text-indigo-300 transition-colors">
                 {money(c.amount_inr)}
               </span>
             </span>
-            <span className="text-sm text-slate-800 dark:text-slate-200">{c.title}</span>
-            <span className="flex items-center justify-between gap-2 text-xs text-slate-500">
-              <span>{c.id}</span>
-              <span>{c.status}</span>
+            <span className="text-sm font-medium text-slate-200 line-clamp-1">{c.title}</span>
+            <span className="flex items-center justify-between gap-2 text-[11px] text-slate-400">
+              <span className="font-mono text-[10px] text-slate-500">{c.id}</span>
+              <span className="rounded-full bg-slate-800/80 px-2 py-0.5 text-[10px] font-medium text-slate-400 border border-slate-700/60 uppercase tracking-wider">{c.status}</span>
             </span>
           </button>
         </li>
